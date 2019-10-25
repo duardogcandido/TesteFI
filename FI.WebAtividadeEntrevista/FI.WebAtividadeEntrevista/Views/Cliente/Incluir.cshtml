@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Cadastrar Cliente";
+}
+<h2>@Html.Raw(ViewBag.Title)</h2>
+@Html.Partial("Forms")
+
+@section scripts{
+    <script>
+        var urlPost = '@Url.Action("Incluir", "Cliente", new { area = "" })';
+
+        var BeneficiariosList = [];
+
+        $("#CPF").inputmask({
+            mask: ['999.999.999-99'],
+            keepStatic: true
+        });
+
+        $("#Telefone").inputmask({
+            mask: ['(99) 99999-9999'],
+            keepStatic: true
+        });
+
+        $("#CPFBeneficiario").inputmask({
+            mask: ['999.999.999-99'],
+            keepStatic: true
+        });
+
+        $("#btnAdd").click(function () {
+            if ($("#CPFBeneficiario").val() != '' && $("#NomeBeneficiario").val() != '') {
+                BeneficiariosList.push({
+                    cpf: $("#CPFBeneficiario").val(),
+                    nome: $("#NomeBeneficiario").val()
+                });
+
+                var buttonAlterar = "<td><button type='button' class='btn btn-info'>Alterar</button></td>";
+                var buttonExcluir = "<td><button type='button' class='btn btn-info'>Excluir</button></td>";
+
+                $("#tabelaBeneficiario").html($("#tabelaBeneficiario").html() + "<tr><td>" + $("#CPFBeneficiario").val() + "</td><td>" + $("#NomeBeneficiario").val() + "</td>" + buttonAlterar + buttonExcluir + "</tr>");
+
+                $("#CPFBeneficiario").val('');
+                $("#NomeBeneficiario").val('');
+            }
+        });
+
+    </script>
+    @Scripts.Render("~/bundles/clientes")
+}
